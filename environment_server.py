@@ -90,7 +90,8 @@ class EnvironmentServer:
                 if self.verbose:
                     print(f"Creating new environment: {level_name} with seed: {seed}")
 
-                self.env = symbolic_alchemy.get_symbolic_alchemy_level(level_name, seed=seed)
+                self.env = symbolic_alchemy.get_symbolic_alchemy_level(level_name, seed=seed, end_trial_action=True,
+                                                                       num_trials=1000, max_steps_per_trial=1000)
                 response = {'info': 'Environment created.'}
 
             else:
