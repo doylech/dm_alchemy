@@ -44,6 +44,21 @@ class EnvironmentServer:
                 if self.verbose:
                     print(f"Step with action: {action}")
 
+                def is_integer_like(value):
+                    try:
+                        # Convert to float first to handle strings with decimals like "1.0"
+                        float_val = float(str(value))
+                        # Check if it's equal to its integer version
+                        return float_val == int(float_val)
+                    except (ValueError, TypeError):
+                        return False
+
+                if is_integer_like(action):
+                    action = int(action)
+                else:
+                    action = 0  # noop
+                    print(f"Invalid action: {action}. Defaulting to 0 (noop).")
+
                 timestep = self.env.step(action)
                 obs = timestep.observation['symbolic_obs']
                 reward = timestep.reward
